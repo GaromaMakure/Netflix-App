@@ -1,17 +1,15 @@
 import express from "express";
+import authRoutes from "./routes/auth.route.js";
+import { ENV_VARS } from "./config/envVars.js";
+import { connectDB } from "./config/db.js";
+
 const app = express();
-app.get("/api/v1/signup", (req, res) => {
-  res.send("signup route");
-});
+const PORT = ENV_VARS.PORT;
+app.use(express.json());
 
-app.get("/api/v1/login", (req, res) => {
-  res.send("login route");
-});
+app.use("/api/v1/auth", authRoutes);
 
-app.get("/api/v1/logout", (req, res) => {
-  res.send("logout route");
-});
-
-app.listen(5000, () => {
-  console.log("server started at http://localhost:5000");
+app.listen(PORT, () => {
+  console.log("server started at http://localhost:" + PORT);
+  connectDB();
 });
